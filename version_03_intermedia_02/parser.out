@@ -1,0 +1,406 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> Program
+Rule 1     Program -> ID ID ( ) Block
+Rule 2     Block -> { Declarations Statements }
+Rule 3     Declarations -> Declarations Declaration
+Rule 4     Declarations -> empty
+Rule 5     Declaration -> ID ID ;
+Rule 6     Statements -> Statements Statement
+Rule 7     Statements -> empty
+Rule 8     Statement -> Assignment
+Rule 9     Assignment -> ID = Expression ;
+Rule 10    Expression -> Relation
+Rule 11    Relation -> Relation + Term
+Rule 12    Relation -> Term
+Rule 13    Term -> Term * Factor
+Rule 14    Term -> Factor
+Rule 15    Factor -> INTLIT
+Rule 16    Factor -> ID
+Rule 17    Factor -> ( Expression )
+Rule 18    empty -> <empty>
+
+Terminals, with rules where they appear
+
+(                    : 1 17
+)                    : 1 17
+*                    : 13
++                    : 11
+;                    : 5 9
+=                    : 9
+ID                   : 1 1 5 5 9 16
+INTLIT               : 15
+error                : 
+{                    : 2
+}                    : 2
+
+Nonterminals, with rules where they appear
+
+Assignment           : 8
+Block                : 1
+Declaration          : 3
+Declarations         : 2 3
+Expression           : 9 17
+Factor               : 13 14
+Program              : 0
+Relation             : 10 11
+Statement            : 6
+Statements           : 2 6
+Term                 : 11 12 13
+empty                : 4 7
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . Program
+    (1) Program -> . ID ID ( ) Block
+
+    ID              shift and go to state 2
+
+    Program                        shift and go to state 1
+
+state 1
+
+    (0) S' -> Program .
+
+
+
+state 2
+
+    (1) Program -> ID . ID ( ) Block
+
+    ID              shift and go to state 3
+
+
+state 3
+
+    (1) Program -> ID ID . ( ) Block
+
+    (               shift and go to state 4
+
+
+state 4
+
+    (1) Program -> ID ID ( . ) Block
+
+    )               shift and go to state 5
+
+
+state 5
+
+    (1) Program -> ID ID ( ) . Block
+    (2) Block -> . { Declarations Statements }
+
+    {               shift and go to state 7
+
+    Block                          shift and go to state 6
+
+state 6
+
+    (1) Program -> ID ID ( ) Block .
+
+    $end            reduce using rule 1 (Program -> ID ID ( ) Block .)
+
+
+state 7
+
+    (2) Block -> { . Declarations Statements }
+    (3) Declarations -> . Declarations Declaration
+    (4) Declarations -> . empty
+    (18) empty -> .
+
+    ID              reduce using rule 18 (empty -> .)
+    }               reduce using rule 18 (empty -> .)
+
+    Declarations                   shift and go to state 8
+    empty                          shift and go to state 9
+
+state 8
+
+    (2) Block -> { Declarations . Statements }
+    (3) Declarations -> Declarations . Declaration
+    (6) Statements -> . Statements Statement
+    (7) Statements -> . empty
+    (5) Declaration -> . ID ID ;
+    (18) empty -> .
+
+  ! shift/reduce conflict for ID resolved as shift
+    ID              shift and go to state 13
+    }               reduce using rule 18 (empty -> .)
+
+  ! ID              [ reduce using rule 18 (empty -> .) ]
+
+    Statements                     shift and go to state 10
+    Declaration                    shift and go to state 11
+    empty                          shift and go to state 12
+
+state 9
+
+    (4) Declarations -> empty .
+
+    ID              reduce using rule 4 (Declarations -> empty .)
+    }               reduce using rule 4 (Declarations -> empty .)
+
+
+state 10
+
+    (2) Block -> { Declarations Statements . }
+    (6) Statements -> Statements . Statement
+    (8) Statement -> . Assignment
+    (9) Assignment -> . ID = Expression ;
+
+    }               shift and go to state 14
+    ID              shift and go to state 17
+
+    Statement                      shift and go to state 15
+    Assignment                     shift and go to state 16
+
+state 11
+
+    (3) Declarations -> Declarations Declaration .
+
+    ID              reduce using rule 3 (Declarations -> Declarations Declaration .)
+    }               reduce using rule 3 (Declarations -> Declarations Declaration .)
+
+
+state 12
+
+    (7) Statements -> empty .
+
+    }               reduce using rule 7 (Statements -> empty .)
+    ID              reduce using rule 7 (Statements -> empty .)
+
+
+state 13
+
+    (5) Declaration -> ID . ID ;
+
+    ID              shift and go to state 18
+
+
+state 14
+
+    (2) Block -> { Declarations Statements } .
+
+    $end            reduce using rule 2 (Block -> { Declarations Statements } .)
+
+
+state 15
+
+    (6) Statements -> Statements Statement .
+
+    }               reduce using rule 6 (Statements -> Statements Statement .)
+    ID              reduce using rule 6 (Statements -> Statements Statement .)
+
+
+state 16
+
+    (8) Statement -> Assignment .
+
+    }               reduce using rule 8 (Statement -> Assignment .)
+    ID              reduce using rule 8 (Statement -> Assignment .)
+
+
+state 17
+
+    (9) Assignment -> ID . = Expression ;
+
+    =               shift and go to state 19
+
+
+state 18
+
+    (5) Declaration -> ID ID . ;
+
+    ;               shift and go to state 20
+
+
+state 19
+
+    (9) Assignment -> ID = . Expression ;
+    (10) Expression -> . Relation
+    (11) Relation -> . Relation + Term
+    (12) Relation -> . Term
+    (13) Term -> . Term * Factor
+    (14) Term -> . Factor
+    (15) Factor -> . INTLIT
+    (16) Factor -> . ID
+    (17) Factor -> . ( Expression )
+
+    INTLIT          shift and go to state 26
+    ID              shift and go to state 21
+    (               shift and go to state 27
+
+    Expression                     shift and go to state 22
+    Relation                       shift and go to state 23
+    Term                           shift and go to state 24
+    Factor                         shift and go to state 25
+
+state 20
+
+    (5) Declaration -> ID ID ; .
+
+    ID              reduce using rule 5 (Declaration -> ID ID ; .)
+    }               reduce using rule 5 (Declaration -> ID ID ; .)
+
+
+state 21
+
+    (16) Factor -> ID .
+
+    *               reduce using rule 16 (Factor -> ID .)
+    +               reduce using rule 16 (Factor -> ID .)
+    ;               reduce using rule 16 (Factor -> ID .)
+    )               reduce using rule 16 (Factor -> ID .)
+
+
+state 22
+
+    (9) Assignment -> ID = Expression . ;
+
+    ;               shift and go to state 28
+
+
+state 23
+
+    (10) Expression -> Relation .
+    (11) Relation -> Relation . + Term
+
+    ;               reduce using rule 10 (Expression -> Relation .)
+    )               reduce using rule 10 (Expression -> Relation .)
+    +               shift and go to state 29
+
+
+state 24
+
+    (12) Relation -> Term .
+    (13) Term -> Term . * Factor
+
+    +               reduce using rule 12 (Relation -> Term .)
+    ;               reduce using rule 12 (Relation -> Term .)
+    )               reduce using rule 12 (Relation -> Term .)
+    *               shift and go to state 30
+
+
+state 25
+
+    (14) Term -> Factor .
+
+    *               reduce using rule 14 (Term -> Factor .)
+    +               reduce using rule 14 (Term -> Factor .)
+    ;               reduce using rule 14 (Term -> Factor .)
+    )               reduce using rule 14 (Term -> Factor .)
+
+
+state 26
+
+    (15) Factor -> INTLIT .
+
+    *               reduce using rule 15 (Factor -> INTLIT .)
+    +               reduce using rule 15 (Factor -> INTLIT .)
+    ;               reduce using rule 15 (Factor -> INTLIT .)
+    )               reduce using rule 15 (Factor -> INTLIT .)
+
+
+state 27
+
+    (17) Factor -> ( . Expression )
+    (10) Expression -> . Relation
+    (11) Relation -> . Relation + Term
+    (12) Relation -> . Term
+    (13) Term -> . Term * Factor
+    (14) Term -> . Factor
+    (15) Factor -> . INTLIT
+    (16) Factor -> . ID
+    (17) Factor -> . ( Expression )
+
+    INTLIT          shift and go to state 26
+    ID              shift and go to state 21
+    (               shift and go to state 27
+
+    Expression                     shift and go to state 31
+    Relation                       shift and go to state 23
+    Term                           shift and go to state 24
+    Factor                         shift and go to state 25
+
+state 28
+
+    (9) Assignment -> ID = Expression ; .
+
+    }               reduce using rule 9 (Assignment -> ID = Expression ; .)
+    ID              reduce using rule 9 (Assignment -> ID = Expression ; .)
+
+
+state 29
+
+    (11) Relation -> Relation + . Term
+    (13) Term -> . Term * Factor
+    (14) Term -> . Factor
+    (15) Factor -> . INTLIT
+    (16) Factor -> . ID
+    (17) Factor -> . ( Expression )
+
+    INTLIT          shift and go to state 26
+    ID              shift and go to state 21
+    (               shift and go to state 27
+
+    Term                           shift and go to state 32
+    Factor                         shift and go to state 25
+
+state 30
+
+    (13) Term -> Term * . Factor
+    (15) Factor -> . INTLIT
+    (16) Factor -> . ID
+    (17) Factor -> . ( Expression )
+
+    INTLIT          shift and go to state 26
+    ID              shift and go to state 21
+    (               shift and go to state 27
+
+    Factor                         shift and go to state 33
+
+state 31
+
+    (17) Factor -> ( Expression . )
+
+    )               shift and go to state 34
+
+
+state 32
+
+    (11) Relation -> Relation + Term .
+    (13) Term -> Term . * Factor
+
+    +               reduce using rule 11 (Relation -> Relation + Term .)
+    ;               reduce using rule 11 (Relation -> Relation + Term .)
+    )               reduce using rule 11 (Relation -> Relation + Term .)
+    *               shift and go to state 30
+
+
+state 33
+
+    (13) Term -> Term * Factor .
+
+    *               reduce using rule 13 (Term -> Term * Factor .)
+    +               reduce using rule 13 (Term -> Term * Factor .)
+    ;               reduce using rule 13 (Term -> Term * Factor .)
+    )               reduce using rule 13 (Term -> Term * Factor .)
+
+
+state 34
+
+    (17) Factor -> ( Expression ) .
+
+    *               reduce using rule 17 (Factor -> ( Expression ) .)
+    +               reduce using rule 17 (Factor -> ( Expression ) .)
+    ;               reduce using rule 17 (Factor -> ( Expression ) .)
+    )               reduce using rule 17 (Factor -> ( Expression ) .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for ID in state 8 resolved as shift

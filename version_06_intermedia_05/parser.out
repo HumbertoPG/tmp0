@@ -1,0 +1,751 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> Program
+Rule 1     Program -> FunctionList
+Rule 2     FunctionList -> FunctionList FunctionDecl
+Rule 3     FunctionList -> FunctionDecl
+Rule 4     FunctionDecl -> Type ID ( ParamList ) Block
+Rule 5     FunctionDecl -> Type ID ( ) Block
+Rule 6     ParamList -> ParamList , Param
+Rule 7     ParamList -> Param
+Rule 8     Param -> Type ID
+Rule 9     Block -> { Declarations Statements }
+Rule 10    Declarations -> Declarations Declaration
+Rule 11    Declarations -> empty
+Rule 12    Declaration -> Type ID ;
+Rule 13    Type -> INT
+Rule 14    Type -> FLOAT
+Rule 15    Type -> VOID
+Rule 16    Statements -> Statements Statement
+Rule 17    Statements -> empty
+Rule 18    Statement -> Assignment
+Rule 19    Statement -> ReturnStatement
+Rule 20    Assignment -> ID = Expression ;
+Rule 21    ReturnStatement -> RETURN Expression ;
+Rule 22    Expression -> Relation
+Rule 23    Relation -> Relation + Term
+Rule 24    Relation -> Relation - Term
+Rule 25    Relation -> Term
+Rule 26    Term -> Term * Factor
+Rule 27    Term -> Term / Factor
+Rule 28    Term -> Factor
+Rule 29    Factor -> INTLIT
+Rule 30    Factor -> ID
+Rule 31    Factor -> ( Expression )
+Rule 32    empty -> <empty>
+
+Terminals, with rules where they appear
+
+(                    : 4 5 31
+)                    : 4 5 31
+*                    : 26
++                    : 23
+,                    : 6
+-                    : 24
+/                    : 27
+;                    : 12 20 21
+=                    : 20
+FLOAT                : 14
+ID                   : 4 5 8 12 20 30
+INT                  : 13
+INTLIT               : 29
+RETURN               : 21
+VOID                 : 15
+error                : 
+{                    : 9
+}                    : 9
+
+Nonterminals, with rules where they appear
+
+Assignment           : 18
+Block                : 4 5
+Declaration          : 10
+Declarations         : 9 10
+Expression           : 20 21 31
+Factor               : 26 27 28
+FunctionDecl         : 2 3
+FunctionList         : 1 2
+Param                : 6 7
+ParamList            : 4 6
+Program              : 0
+Relation             : 22 23 24
+ReturnStatement      : 19
+Statement            : 16
+Statements           : 9 16
+Term                 : 23 24 25 26 27
+Type                 : 4 5 8 12
+empty                : 11 17
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . Program
+    (1) Program -> . FunctionList
+    (2) FunctionList -> . FunctionList FunctionDecl
+    (3) FunctionList -> . FunctionDecl
+    (4) FunctionDecl -> . Type ID ( ParamList ) Block
+    (5) FunctionDecl -> . Type ID ( ) Block
+    (13) Type -> . INT
+    (14) Type -> . FLOAT
+    (15) Type -> . VOID
+
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    VOID            shift and go to state 7
+
+    Program                        shift and go to state 1
+    FunctionList                   shift and go to state 2
+    FunctionDecl                   shift and go to state 3
+    Type                           shift and go to state 4
+
+state 1
+
+    (0) S' -> Program .
+
+
+
+state 2
+
+    (1) Program -> FunctionList .
+    (2) FunctionList -> FunctionList . FunctionDecl
+    (4) FunctionDecl -> . Type ID ( ParamList ) Block
+    (5) FunctionDecl -> . Type ID ( ) Block
+    (13) Type -> . INT
+    (14) Type -> . FLOAT
+    (15) Type -> . VOID
+
+    $end            reduce using rule 1 (Program -> FunctionList .)
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    VOID            shift and go to state 7
+
+    FunctionDecl                   shift and go to state 8
+    Type                           shift and go to state 4
+
+state 3
+
+    (3) FunctionList -> FunctionDecl .
+
+    INT             reduce using rule 3 (FunctionList -> FunctionDecl .)
+    FLOAT           reduce using rule 3 (FunctionList -> FunctionDecl .)
+    VOID            reduce using rule 3 (FunctionList -> FunctionDecl .)
+    $end            reduce using rule 3 (FunctionList -> FunctionDecl .)
+
+
+state 4
+
+    (4) FunctionDecl -> Type . ID ( ParamList ) Block
+    (5) FunctionDecl -> Type . ID ( ) Block
+
+    ID              shift and go to state 9
+
+
+state 5
+
+    (13) Type -> INT .
+
+    ID              reduce using rule 13 (Type -> INT .)
+
+
+state 6
+
+    (14) Type -> FLOAT .
+
+    ID              reduce using rule 14 (Type -> FLOAT .)
+
+
+state 7
+
+    (15) Type -> VOID .
+
+    ID              reduce using rule 15 (Type -> VOID .)
+
+
+state 8
+
+    (2) FunctionList -> FunctionList FunctionDecl .
+
+    INT             reduce using rule 2 (FunctionList -> FunctionList FunctionDecl .)
+    FLOAT           reduce using rule 2 (FunctionList -> FunctionList FunctionDecl .)
+    VOID            reduce using rule 2 (FunctionList -> FunctionList FunctionDecl .)
+    $end            reduce using rule 2 (FunctionList -> FunctionList FunctionDecl .)
+
+
+state 9
+
+    (4) FunctionDecl -> Type ID . ( ParamList ) Block
+    (5) FunctionDecl -> Type ID . ( ) Block
+
+    (               shift and go to state 10
+
+
+state 10
+
+    (4) FunctionDecl -> Type ID ( . ParamList ) Block
+    (5) FunctionDecl -> Type ID ( . ) Block
+    (6) ParamList -> . ParamList , Param
+    (7) ParamList -> . Param
+    (8) Param -> . Type ID
+    (13) Type -> . INT
+    (14) Type -> . FLOAT
+    (15) Type -> . VOID
+
+    )               shift and go to state 13
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    VOID            shift and go to state 7
+
+    Type                           shift and go to state 11
+    ParamList                      shift and go to state 12
+    Param                          shift and go to state 14
+
+state 11
+
+    (8) Param -> Type . ID
+
+    ID              shift and go to state 15
+
+
+state 12
+
+    (4) FunctionDecl -> Type ID ( ParamList . ) Block
+    (6) ParamList -> ParamList . , Param
+
+    )               shift and go to state 16
+    ,               shift and go to state 17
+
+
+state 13
+
+    (5) FunctionDecl -> Type ID ( ) . Block
+    (9) Block -> . { Declarations Statements }
+
+    {               shift and go to state 19
+
+    Block                          shift and go to state 18
+
+state 14
+
+    (7) ParamList -> Param .
+
+    )               reduce using rule 7 (ParamList -> Param .)
+    ,               reduce using rule 7 (ParamList -> Param .)
+
+
+state 15
+
+    (8) Param -> Type ID .
+
+    )               reduce using rule 8 (Param -> Type ID .)
+    ,               reduce using rule 8 (Param -> Type ID .)
+
+
+state 16
+
+    (4) FunctionDecl -> Type ID ( ParamList ) . Block
+    (9) Block -> . { Declarations Statements }
+
+    {               shift and go to state 19
+
+    Block                          shift and go to state 20
+
+state 17
+
+    (6) ParamList -> ParamList , . Param
+    (8) Param -> . Type ID
+    (13) Type -> . INT
+    (14) Type -> . FLOAT
+    (15) Type -> . VOID
+
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    VOID            shift and go to state 7
+
+    Param                          shift and go to state 21
+    Type                           shift and go to state 11
+
+state 18
+
+    (5) FunctionDecl -> Type ID ( ) Block .
+
+    INT             reduce using rule 5 (FunctionDecl -> Type ID ( ) Block .)
+    FLOAT           reduce using rule 5 (FunctionDecl -> Type ID ( ) Block .)
+    VOID            reduce using rule 5 (FunctionDecl -> Type ID ( ) Block .)
+    $end            reduce using rule 5 (FunctionDecl -> Type ID ( ) Block .)
+
+
+state 19
+
+    (9) Block -> { . Declarations Statements }
+    (10) Declarations -> . Declarations Declaration
+    (11) Declarations -> . empty
+    (32) empty -> .
+
+    INT             reduce using rule 32 (empty -> .)
+    FLOAT           reduce using rule 32 (empty -> .)
+    VOID            reduce using rule 32 (empty -> .)
+    }               reduce using rule 32 (empty -> .)
+    ID              reduce using rule 32 (empty -> .)
+    RETURN          reduce using rule 32 (empty -> .)
+
+    Declarations                   shift and go to state 22
+    empty                          shift and go to state 23
+
+state 20
+
+    (4) FunctionDecl -> Type ID ( ParamList ) Block .
+
+    INT             reduce using rule 4 (FunctionDecl -> Type ID ( ParamList ) Block .)
+    FLOAT           reduce using rule 4 (FunctionDecl -> Type ID ( ParamList ) Block .)
+    VOID            reduce using rule 4 (FunctionDecl -> Type ID ( ParamList ) Block .)
+    $end            reduce using rule 4 (FunctionDecl -> Type ID ( ParamList ) Block .)
+
+
+state 21
+
+    (6) ParamList -> ParamList , Param .
+
+    )               reduce using rule 6 (ParamList -> ParamList , Param .)
+    ,               reduce using rule 6 (ParamList -> ParamList , Param .)
+
+
+state 22
+
+    (9) Block -> { Declarations . Statements }
+    (10) Declarations -> Declarations . Declaration
+    (16) Statements -> . Statements Statement
+    (17) Statements -> . empty
+    (12) Declaration -> . Type ID ;
+    (32) empty -> .
+    (13) Type -> . INT
+    (14) Type -> . FLOAT
+    (15) Type -> . VOID
+
+    }               reduce using rule 32 (empty -> .)
+    ID              reduce using rule 32 (empty -> .)
+    RETURN          reduce using rule 32 (empty -> .)
+    INT             shift and go to state 5
+    FLOAT           shift and go to state 6
+    VOID            shift and go to state 7
+
+    Statements                     shift and go to state 24
+    Declaration                    shift and go to state 25
+    empty                          shift and go to state 26
+    Type                           shift and go to state 27
+
+state 23
+
+    (11) Declarations -> empty .
+
+    INT             reduce using rule 11 (Declarations -> empty .)
+    FLOAT           reduce using rule 11 (Declarations -> empty .)
+    VOID            reduce using rule 11 (Declarations -> empty .)
+    }               reduce using rule 11 (Declarations -> empty .)
+    ID              reduce using rule 11 (Declarations -> empty .)
+    RETURN          reduce using rule 11 (Declarations -> empty .)
+
+
+state 24
+
+    (9) Block -> { Declarations Statements . }
+    (16) Statements -> Statements . Statement
+    (18) Statement -> . Assignment
+    (19) Statement -> . ReturnStatement
+    (20) Assignment -> . ID = Expression ;
+    (21) ReturnStatement -> . RETURN Expression ;
+
+    }               shift and go to state 28
+    ID              shift and go to state 32
+    RETURN          shift and go to state 33
+
+    Statement                      shift and go to state 29
+    Assignment                     shift and go to state 30
+    ReturnStatement                shift and go to state 31
+
+state 25
+
+    (10) Declarations -> Declarations Declaration .
+
+    INT             reduce using rule 10 (Declarations -> Declarations Declaration .)
+    FLOAT           reduce using rule 10 (Declarations -> Declarations Declaration .)
+    VOID            reduce using rule 10 (Declarations -> Declarations Declaration .)
+    }               reduce using rule 10 (Declarations -> Declarations Declaration .)
+    ID              reduce using rule 10 (Declarations -> Declarations Declaration .)
+    RETURN          reduce using rule 10 (Declarations -> Declarations Declaration .)
+
+
+state 26
+
+    (17) Statements -> empty .
+
+    }               reduce using rule 17 (Statements -> empty .)
+    ID              reduce using rule 17 (Statements -> empty .)
+    RETURN          reduce using rule 17 (Statements -> empty .)
+
+
+state 27
+
+    (12) Declaration -> Type . ID ;
+
+    ID              shift and go to state 34
+
+
+state 28
+
+    (9) Block -> { Declarations Statements } .
+
+    INT             reduce using rule 9 (Block -> { Declarations Statements } .)
+    FLOAT           reduce using rule 9 (Block -> { Declarations Statements } .)
+    VOID            reduce using rule 9 (Block -> { Declarations Statements } .)
+    $end            reduce using rule 9 (Block -> { Declarations Statements } .)
+
+
+state 29
+
+    (16) Statements -> Statements Statement .
+
+    }               reduce using rule 16 (Statements -> Statements Statement .)
+    ID              reduce using rule 16 (Statements -> Statements Statement .)
+    RETURN          reduce using rule 16 (Statements -> Statements Statement .)
+
+
+state 30
+
+    (18) Statement -> Assignment .
+
+    }               reduce using rule 18 (Statement -> Assignment .)
+    ID              reduce using rule 18 (Statement -> Assignment .)
+    RETURN          reduce using rule 18 (Statement -> Assignment .)
+
+
+state 31
+
+    (19) Statement -> ReturnStatement .
+
+    }               reduce using rule 19 (Statement -> ReturnStatement .)
+    ID              reduce using rule 19 (Statement -> ReturnStatement .)
+    RETURN          reduce using rule 19 (Statement -> ReturnStatement .)
+
+
+state 32
+
+    (20) Assignment -> ID . = Expression ;
+
+    =               shift and go to state 35
+
+
+state 33
+
+    (21) ReturnStatement -> RETURN . Expression ;
+    (22) Expression -> . Relation
+    (23) Relation -> . Relation + Term
+    (24) Relation -> . Relation - Term
+    (25) Relation -> . Term
+    (26) Term -> . Term * Factor
+    (27) Term -> . Term / Factor
+    (28) Term -> . Factor
+    (29) Factor -> . INTLIT
+    (30) Factor -> . ID
+    (31) Factor -> . ( Expression )
+
+    INTLIT          shift and go to state 40
+    ID              shift and go to state 41
+    (               shift and go to state 42
+
+    Expression                     shift and go to state 36
+    Relation                       shift and go to state 37
+    Term                           shift and go to state 38
+    Factor                         shift and go to state 39
+
+state 34
+
+    (12) Declaration -> Type ID . ;
+
+    ;               shift and go to state 43
+
+
+state 35
+
+    (20) Assignment -> ID = . Expression ;
+    (22) Expression -> . Relation
+    (23) Relation -> . Relation + Term
+    (24) Relation -> . Relation - Term
+    (25) Relation -> . Term
+    (26) Term -> . Term * Factor
+    (27) Term -> . Term / Factor
+    (28) Term -> . Factor
+    (29) Factor -> . INTLIT
+    (30) Factor -> . ID
+    (31) Factor -> . ( Expression )
+
+    INTLIT          shift and go to state 40
+    ID              shift and go to state 41
+    (               shift and go to state 42
+
+    Expression                     shift and go to state 44
+    Relation                       shift and go to state 37
+    Term                           shift and go to state 38
+    Factor                         shift and go to state 39
+
+state 36
+
+    (21) ReturnStatement -> RETURN Expression . ;
+
+    ;               shift and go to state 45
+
+
+state 37
+
+    (22) Expression -> Relation .
+    (23) Relation -> Relation . + Term
+    (24) Relation -> Relation . - Term
+
+    ;               reduce using rule 22 (Expression -> Relation .)
+    )               reduce using rule 22 (Expression -> Relation .)
+    +               shift and go to state 46
+    -               shift and go to state 47
+
+
+state 38
+
+    (25) Relation -> Term .
+    (26) Term -> Term . * Factor
+    (27) Term -> Term . / Factor
+
+    +               reduce using rule 25 (Relation -> Term .)
+    -               reduce using rule 25 (Relation -> Term .)
+    ;               reduce using rule 25 (Relation -> Term .)
+    )               reduce using rule 25 (Relation -> Term .)
+    *               shift and go to state 48
+    /               shift and go to state 49
+
+
+state 39
+
+    (28) Term -> Factor .
+
+    *               reduce using rule 28 (Term -> Factor .)
+    /               reduce using rule 28 (Term -> Factor .)
+    +               reduce using rule 28 (Term -> Factor .)
+    -               reduce using rule 28 (Term -> Factor .)
+    ;               reduce using rule 28 (Term -> Factor .)
+    )               reduce using rule 28 (Term -> Factor .)
+
+
+state 40
+
+    (29) Factor -> INTLIT .
+
+    *               reduce using rule 29 (Factor -> INTLIT .)
+    /               reduce using rule 29 (Factor -> INTLIT .)
+    +               reduce using rule 29 (Factor -> INTLIT .)
+    -               reduce using rule 29 (Factor -> INTLIT .)
+    ;               reduce using rule 29 (Factor -> INTLIT .)
+    )               reduce using rule 29 (Factor -> INTLIT .)
+
+
+state 41
+
+    (30) Factor -> ID .
+
+    *               reduce using rule 30 (Factor -> ID .)
+    /               reduce using rule 30 (Factor -> ID .)
+    +               reduce using rule 30 (Factor -> ID .)
+    -               reduce using rule 30 (Factor -> ID .)
+    ;               reduce using rule 30 (Factor -> ID .)
+    )               reduce using rule 30 (Factor -> ID .)
+
+
+state 42
+
+    (31) Factor -> ( . Expression )
+    (22) Expression -> . Relation
+    (23) Relation -> . Relation + Term
+    (24) Relation -> . Relation - Term
+    (25) Relation -> . Term
+    (26) Term -> . Term * Factor
+    (27) Term -> . Term / Factor
+    (28) Term -> . Factor
+    (29) Factor -> . INTLIT
+    (30) Factor -> . ID
+    (31) Factor -> . ( Expression )
+
+    INTLIT          shift and go to state 40
+    ID              shift and go to state 41
+    (               shift and go to state 42
+
+    Expression                     shift and go to state 50
+    Relation                       shift and go to state 37
+    Term                           shift and go to state 38
+    Factor                         shift and go to state 39
+
+state 43
+
+    (12) Declaration -> Type ID ; .
+
+    INT             reduce using rule 12 (Declaration -> Type ID ; .)
+    FLOAT           reduce using rule 12 (Declaration -> Type ID ; .)
+    VOID            reduce using rule 12 (Declaration -> Type ID ; .)
+    }               reduce using rule 12 (Declaration -> Type ID ; .)
+    ID              reduce using rule 12 (Declaration -> Type ID ; .)
+    RETURN          reduce using rule 12 (Declaration -> Type ID ; .)
+
+
+state 44
+
+    (20) Assignment -> ID = Expression . ;
+
+    ;               shift and go to state 51
+
+
+state 45
+
+    (21) ReturnStatement -> RETURN Expression ; .
+
+    }               reduce using rule 21 (ReturnStatement -> RETURN Expression ; .)
+    ID              reduce using rule 21 (ReturnStatement -> RETURN Expression ; .)
+    RETURN          reduce using rule 21 (ReturnStatement -> RETURN Expression ; .)
+
+
+state 46
+
+    (23) Relation -> Relation + . Term
+    (26) Term -> . Term * Factor
+    (27) Term -> . Term / Factor
+    (28) Term -> . Factor
+    (29) Factor -> . INTLIT
+    (30) Factor -> . ID
+    (31) Factor -> . ( Expression )
+
+    INTLIT          shift and go to state 40
+    ID              shift and go to state 41
+    (               shift and go to state 42
+
+    Term                           shift and go to state 52
+    Factor                         shift and go to state 39
+
+state 47
+
+    (24) Relation -> Relation - . Term
+    (26) Term -> . Term * Factor
+    (27) Term -> . Term / Factor
+    (28) Term -> . Factor
+    (29) Factor -> . INTLIT
+    (30) Factor -> . ID
+    (31) Factor -> . ( Expression )
+
+    INTLIT          shift and go to state 40
+    ID              shift and go to state 41
+    (               shift and go to state 42
+
+    Term                           shift and go to state 53
+    Factor                         shift and go to state 39
+
+state 48
+
+    (26) Term -> Term * . Factor
+    (29) Factor -> . INTLIT
+    (30) Factor -> . ID
+    (31) Factor -> . ( Expression )
+
+    INTLIT          shift and go to state 40
+    ID              shift and go to state 41
+    (               shift and go to state 42
+
+    Factor                         shift and go to state 54
+
+state 49
+
+    (27) Term -> Term / . Factor
+    (29) Factor -> . INTLIT
+    (30) Factor -> . ID
+    (31) Factor -> . ( Expression )
+
+    INTLIT          shift and go to state 40
+    ID              shift and go to state 41
+    (               shift and go to state 42
+
+    Factor                         shift and go to state 55
+
+state 50
+
+    (31) Factor -> ( Expression . )
+
+    )               shift and go to state 56
+
+
+state 51
+
+    (20) Assignment -> ID = Expression ; .
+
+    }               reduce using rule 20 (Assignment -> ID = Expression ; .)
+    ID              reduce using rule 20 (Assignment -> ID = Expression ; .)
+    RETURN          reduce using rule 20 (Assignment -> ID = Expression ; .)
+
+
+state 52
+
+    (23) Relation -> Relation + Term .
+    (26) Term -> Term . * Factor
+    (27) Term -> Term . / Factor
+
+    +               reduce using rule 23 (Relation -> Relation + Term .)
+    -               reduce using rule 23 (Relation -> Relation + Term .)
+    ;               reduce using rule 23 (Relation -> Relation + Term .)
+    )               reduce using rule 23 (Relation -> Relation + Term .)
+    *               shift and go to state 48
+    /               shift and go to state 49
+
+
+state 53
+
+    (24) Relation -> Relation - Term .
+    (26) Term -> Term . * Factor
+    (27) Term -> Term . / Factor
+
+    +               reduce using rule 24 (Relation -> Relation - Term .)
+    -               reduce using rule 24 (Relation -> Relation - Term .)
+    ;               reduce using rule 24 (Relation -> Relation - Term .)
+    )               reduce using rule 24 (Relation -> Relation - Term .)
+    *               shift and go to state 48
+    /               shift and go to state 49
+
+
+state 54
+
+    (26) Term -> Term * Factor .
+
+    *               reduce using rule 26 (Term -> Term * Factor .)
+    /               reduce using rule 26 (Term -> Term * Factor .)
+    +               reduce using rule 26 (Term -> Term * Factor .)
+    -               reduce using rule 26 (Term -> Term * Factor .)
+    ;               reduce using rule 26 (Term -> Term * Factor .)
+    )               reduce using rule 26 (Term -> Term * Factor .)
+
+
+state 55
+
+    (27) Term -> Term / Factor .
+
+    *               reduce using rule 27 (Term -> Term / Factor .)
+    /               reduce using rule 27 (Term -> Term / Factor .)
+    +               reduce using rule 27 (Term -> Term / Factor .)
+    -               reduce using rule 27 (Term -> Term / Factor .)
+    ;               reduce using rule 27 (Term -> Term / Factor .)
+    )               reduce using rule 27 (Term -> Term / Factor .)
+
+
+state 56
+
+    (31) Factor -> ( Expression ) .
+
+    *               reduce using rule 31 (Factor -> ( Expression ) .)
+    /               reduce using rule 31 (Factor -> ( Expression ) .)
+    +               reduce using rule 31 (Factor -> ( Expression ) .)
+    -               reduce using rule 31 (Factor -> ( Expression ) .)
+    ;               reduce using rule 31 (Factor -> ( Expression ) .)
+    )               reduce using rule 31 (Factor -> ( Expression ) .)
+
